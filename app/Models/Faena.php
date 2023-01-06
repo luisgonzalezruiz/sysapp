@@ -10,7 +10,7 @@ class Faena extends Model
     use HasFactory;
 
     protected $primaryKey  = 'fae_codigo';
-    protected $table = 'faena';
+    protected $table = 'Faena';
 
     protected $fillable =
             ['fae_nro_lote', 'fae_fecha', 'prov_codigo',

@@ -20,8 +20,8 @@ class FaenaController extends Controller
         if ($buscar==''){
             //$faenas = Faena::orderBy('fae_codigo', 'desc')->get();
 
-            $faenas = Faena::join('proveedores as c','c.proveedor_id','faena.prov_codigo')
-                            ->select('faena.*','c.nombres as prov_descripcion')->get();
+            $faenas = Faena::join('proveedores as c','c.prov_codigo','Faena.ProvCodigo')
+                            ->select('Faena.*','c.prov_descripcion as prov_descripcion')->get();
 
         }
         else{
@@ -29,9 +29,9 @@ class FaenaController extends Controller
             //$faenas = Faena::where('fae_hecho_por', 'like', '%'. $buscar . '%')
             //                ->orderBy('fae_codigo', 'desc')->get();
 
-            $faenas = Faena::join('proveedores as c','c.proveedor_id','faena.prov_codigo')
-                            ->select('faena.*','c.nombres as prov_descripcion')
-                            ->where('faena.fae_codigo', 'like','%'. $buscar . '%')->get();
+            $faenas = Faena::join('proveedores as c','c.prov_codigo','Faena.ProvCodigo')
+                            ->select('Faena.*','c.prov_descripcion as prov_descripcion')
+                            ->where('Faena.fae_codigo', 'like','%'. $buscar . '%')->get();
         }
         return response()->json([
             'data'=>$faenas,

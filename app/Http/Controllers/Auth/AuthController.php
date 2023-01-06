@@ -5,8 +5,20 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+
+
 class AuthController extends Controller
 {
+
+    public function index()
+    {
+        $users = User::all();
+        return response()->json([
+            'data'=>$users,
+            'mensaje'=>'Successfully Retrieved categorias'
+        ],200);
+
+    }
 
     // OJO : las tablas del passport php artisan passport:install
 

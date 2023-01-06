@@ -18,6 +18,8 @@ use App\Http\Controllers\FaenaDetallesController;
 use App\Http\Controllers\RomaneoController;
 use App\Http\Controllers\RomaneoDetalleController;
 
+use App\Http\Controllers\Auth\AuthController;
+
 
 /*
 Route::middleware('auth:api')->get('/user', function (Request $request) {
@@ -52,6 +54,9 @@ Route::group(['middleware' => 'auth:api'], function() {
     //Route::get('productos',[ProductosController::class,'index'])->name('produtos.index');
     //Route::post('productos',[ProductosController::class,'store']);
 });
+
+
+Route::get('users',[AuthController::class,'index']);
 
 Route::get('categorias',[CategoriasController::class,'index']);
 Route::get('categorias/{id}',[CategoriasController::class,'show']);
