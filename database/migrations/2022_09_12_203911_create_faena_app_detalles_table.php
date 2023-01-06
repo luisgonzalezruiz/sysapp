@@ -13,7 +13,7 @@ class CreateFaenaDetallesTable extends Migration
      */
     public function up()
     {
-        Schema::create('faena_detalles', function (Blueprint $table) {
+        Schema::create('faena_app_detalles', function (Blueprint $table) {
             $table->integer('fd_item',true);
             $table->string('fae_nro_lote');
             $table->integer('fae_codigo');
@@ -33,6 +33,6 @@ class CreateFaenaDetallesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('faena_detalles');
+        Schema::dropIfExists('faena_app_detalles');
     }
 }

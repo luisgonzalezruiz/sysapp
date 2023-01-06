@@ -13,7 +13,7 @@ class CreateFaenaTable extends Migration
      */
     public function up()
     {
-        Schema::create('faena', function (Blueprint $table) {
+        Schema::create('faena_app', function (Blueprint $table) {
             $table->integer('fae_codigo',true);
             $table->string('fae_nro_lote');
             $table->date('fae_fecha');
@@ -25,7 +25,7 @@ class CreateFaenaTable extends Migration
             $table->string('com_nro_comprobante')->nullable();
             $table->integer('com_codigo')->nullable();
             $table->integer('user_id');
-            
+
             $table->timestamps();
         });
     }
@@ -37,6 +37,6 @@ class CreateFaenaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('faena');
+        Schema::dropIfExists('faena_app');
     }
 }
