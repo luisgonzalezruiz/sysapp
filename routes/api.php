@@ -14,11 +14,13 @@ use App\Http\Controllers\ProveedoresController;
 use App\Http\Controllers\FaenaController;
 use App\Http\Controllers\FaenaDetallesController;
 
-
 use App\Http\Controllers\RomaneoController;
 use App\Http\Controllers\RomaneoDetalleController;
 
 use App\Http\Controllers\Auth\AuthController;
+
+use App\Http\Controllers\VentaController;
+use App\Http\Controllers\VentaDetalleController;
 
 
 /*
@@ -132,3 +134,21 @@ Route::get('romaneoDetalles/rom_codigo/{id}',[RomaneoDetalleController::class,'s
 Route::post('romaneoDetalles',[RomaneoDetalleController::class,'store']);
 Route::put('romaneoDetalles/{id}',[RomaneoDetalleController::class,'update']);
 Route::delete('romaneoDetalles/{id}',[RomaneoDetalleController::class,'destroy']);
+
+
+// Ventas
+Route::get('ventas',[VentaController::class,'index']);
+Route::get('ventas/{id}',[VentaController::class,'show']);
+
+// Esta ruta nos sirve tanto para insertar o actualizar la faena, viene cabecera detalle aqui
+Route::post('ventas/saveVenta',[VentaController::class,'saveVenta']);
+Route::delete('ventas/{id}',[VentaController::class,'destroy']);
+
+// detalles del romaneo
+Route::get('ventaDetalles',[VentaDetalleController::class,'index']);
+Route::get('ventaDetalles/{id}',[VentaDetalleController::class,'show']);
+
+Route::get('ventaDetalles/vta_codigo/{id}',[VentaDetalleController::class,'showByID']);
+Route::post('ventaDetalles',[VentaDetalleController::class,'store']);
+Route::put('ventaDetalles/{id}',[VentaDetalleController::class,'update']);
+Route::delete('ventaDetalles/{id}',[VentaDetalleController::class,'destroy']);

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\VentasDetalles;
+use App\Models\VentaDetalle;
 use Illuminate\Http\Request;
 
-class VentasDetallesController extends Controller
+class VentaDetalleController extends Controller
 {
 
     public function index()
@@ -14,16 +14,16 @@ class VentasDetallesController extends Controller
         $buscar = $request->buscar;
 
         if ($buscar==''){
-            $romaneos = RomaneoDetalle::orderBy('rom_codigo', 'desc')->get();
+            $ventas = VentaDetalle::orderBy('vta_codigo', 'desc')->get();
         }
         else{
-            $romaneos = RomaneoDetalle::where('rom_codigo', 'like', '%'. $buscar . '%')
-                            ->orderBy('rom_codigo', 'desc')->get();
+            $ventas = VentaDetalle::where('vta_codigo', 'like', '%'. $buscar . '%')
+                            ->orderBy('vta_codigo', 'desc')->get();
         }
 
         return response()->json([
-            'data'=>$romaneos,
-            'mensaje'=>'Successfully Retrieved romaneos'
+            'data'=>$ventas,
+            'mensaje'=>'Successfully Retrieved ventas'
         ],200);
     }
 
@@ -55,11 +55,11 @@ class VentasDetallesController extends Controller
          //        ->where('faena_detalles.fae_codigo', '=', $fae_codigo )
          //        ->orderBy('fd_item', 'desc')->get();
 
-         $romaneo_detalles = VentaDetalle::where('vta_codigo', '=', $vta_codigo)
-                 ->orderBy('rom_det_item','asc')->get();
+         $venta_detalles = VentaDetalle::where('vta_codigo', '=', $vta_codigo)
+                 ->orderBy('dv_item','asc')->get();
 
          return response()->json([
-             'data'=>$romaneo_detalles,
+             'data'=>$venta_detalles,
              'mensaje'=>'Successfully Retrieved Faenas'
          ],200);
 
