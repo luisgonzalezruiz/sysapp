@@ -9,7 +9,7 @@ class FaenaDetalles extends Model
 {
     use HasFactory;
     protected $primaryKey  = 'fd_item';
-    protected $table = 'DetallesFaena';
+    protected $table = 'faena_app_detalles';
 
     protected $fillable = ['fae_nro_lote','fae_codigo','fd_tarjeta','fd_kilos', 'pro_codigo', 'cla_codigo'];
 
@@ -20,7 +20,7 @@ class FaenaDetalles extends Model
     }
 
     public function producto(){
-        return $this->belongsTo(Producto::class,'pro_codigo','producto_id');
+        return $this->belongsTo(Producto::class,'pro_codigo','pro_codigo');
     }
 
 

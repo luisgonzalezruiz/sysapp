@@ -21,12 +21,12 @@ class RomaneoController extends Controller
         if ($buscar==''){
             //$faenas = Romaneo::orderBy('fae_codigo', 'desc')->get();
 
-            $romaneos = Romaneo::join('clientes as c','c.cli_codigo','romaneo.cli_codigo')
-                            ->select('romaneo.*','c.cli_nombres as cli_nombres')->get();
+            $romaneos = Romaneo::join('clientes as c','c.cli_codigo','romaneo_app.cli_codigo')
+                            ->select('romaneo_app.*','c.cli_nombres as cli_nombres')->get();
         }
         else{
-            $romaneos = Romaneo::join('clientes as c','c.cli_codigo','romaneo.cli_codigo')
-                            ->select('romaneo.*','c.cli_nombres as cli_nombres')
+            $romaneos = Romaneo::join('clientes as c','c.cli_codigo','romaneo_app.cli_codigo')
+                            ->select('romaneo_app.*','c.cli_nombres as cli_nombres')
                             ->where('c.cli_nombres', 'like','%'. $buscar . '%')->get();
         }
         return response()->json([
@@ -366,9 +366,9 @@ class RomaneoController extends Controller
 
     public function show($id)
     {
-        $romaneo = Romaneo::join('clientes as c','c.cli_codigo','romaneo.cli_codigo')
-        ->select('romaneo.*','c.cli_nombres as cli_nombres')
-        ->where('romaneo.rom_codigo', '=', $id )->get();
+        $romaneo = Romaneo::join('clientes as c','c.cli_codigo','romaneo_app.cli_codigo')
+        ->select('romaneo_app.*','c.cli_nombres as cli_nombres')
+        ->where('romaneo_app.rom_codigo', '=', $id )->get();
 
         // de esta forma al recuperar un producto recupero la categoria y las imagenes relacionadas
         //$producto = $this->producto->with(['categoria', 'productos_imagen'])->findOrFail($id);

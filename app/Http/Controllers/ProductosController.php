@@ -35,7 +35,6 @@ class ProductosController extends Controller
         $buscar = $request->buscar;
         //$productos = Producto::all();
 
-
         //return response()->json([
         //    'data'=>$otro,
         //    'mensaje'=>'Successfully Retrieved Productos'
@@ -44,14 +43,18 @@ class ProductosController extends Controller
         //>with('categoria','productos_imagen') -> estas son las relaciones definidas en el modelo Producto
         if ($buscar==''){
             //$productos = Producto::orderBy('producto_id', 'desc')->with('categoria','productos_imagen')->get();
-            $productos = Producto::orderBy('producto_id', 'desc')->get();
+            //$productos = Producto::orderBy('pro_codigo', 'desc')->get();
+            $productos = Producto::select('pro_codigo','pro_codigo_local','pro_descripcion_local',
+                                          'pro_descripcion_origen','pro_precio_costo','pro_imagen',
+                                          'categoria_id','pro_activo','iva_compra','iva_venta')
+                                    ->orderBy('pro_codigo', 'desc')->get();
         }
         else{
             //$productos = Producto::where('nombre', 'like', '%'. $buscar . '%')
             //                ->orderBy('producto_id', 'desc')->with('categoria','productos_imagen')->get();
 
-            $productos = Producto::whereRaw('LOWER(nombre) like (?)', ["%{$buscar}%"])
-                              ->orderBy('producto_id', 'desc')->get();
+            $productos = Producto::whereRaw('LOWER(pro_descripcion_local) like (?)', ["%{$buscar}%"])
+                              ->orderBy('pro_codigo', 'desc')->get();
             //$productos = Producto::where('nombre', 'like', '%'. $buscar . '%')
         }
 

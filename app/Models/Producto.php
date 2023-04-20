@@ -9,16 +9,21 @@ use Illuminate\Database\Eloquent\Model;
 class Producto extends Model
 {
     use HasFactory;
-    protected $primaryKey  = 'producto_id';
+    protected $primaryKey  = 'pro_codigo';
     protected $table = 'productos';
 
-    protected $fillable = ['nombre','descripcion','precio','categoria_id','activo'];
+    protected $fillable = ['pro_descripcion_local',
+                            'pro_descripcion_origen',
+                            'pro_precio_costo', 'pro_imagen',
+                            'categoria_id','pro_activo'];
 
+    /*
     //relacionamos el producto a la categoria
-    public function categoria(){
-        return $this->belongsTo(Categoria::class,'categoria_id');  //post->category->name
+    public function rubro(){
+        return $this->belongsTo(Rubro::class,'rub_codigo');  //post->category->name
         //return $this->belongsTo('App\Models\Categoria', 'categoria_id', 'categoria_id');
     }
+    */
 
     //definimos una relacion uno a mucho
     //cuando recuperamos un producto, con ella recuperamos todas las fotos asociadas

@@ -21,16 +21,16 @@ class VentaController extends Controller
         if ($buscar==''){
             //$faenas = Ventas::orderBy('fae_codigo', 'desc')->get();
 
-            $ventas = Venta::join('clientes as c','c.cli_codigo','ventas.cli_codigo')
-                            ->select('ventas.*','c.cli_nombres as cli_nombres')
+            $ventas = Venta::join('clientes as c','c.cli_codigo','ventas_app.cli_codigo')
+                            ->select('ventas_app.*','c.cli_nombres as cli_nombres')
                             ->where([
                                 ['origen','=','APP'],
                                 ['vta_fecha_venta','>=','2023-01-01'],
                             ])->get();
         }
         else{
-            $ventas = Venta::join('clientes as c','c.cli_codigo','ventas.cli_codigo')
-                            ->select('ventas.*','c.cli_nombres as cli_nombres')
+            $ventas = Venta::join('clientes as c','c.cli_codigo','ventas_app.cli_codigo')
+                            ->select('ventas_app.*','c.cli_nombres as cli_nombres')
                             ->where([
                                 ['origen','=','APP'],
                                 ['vta_fecha_venta','>=','2023-01-01'],
@@ -52,6 +52,7 @@ class VentaController extends Controller
     public function saveVenta(Request $request)
     {
         $data = $request;
+
         // de esta forma sacamos los detalles
         $detalles  = $data->detalles;
         $mensaje = '';
@@ -119,7 +120,6 @@ class VentaController extends Controller
             $venta->tipo_documento =  $data->tipo_documento;
             $venta->origen = $data->origen;
             $venta->user_id = $data->user_id;
-
 
             $venta->save();
 
@@ -198,9 +198,9 @@ class VentaController extends Controller
 
     public function show($id)
     {
-        $venta = Venta::join('clientes as c','c.cli_codigo','ventas.cli_codigo')
-        ->select('ventas.*','c.cli_nombres as cli_nombres')
-        ->where('ventas.vta_codigo', '=', $id )->get();
+        $venta = Venta::join('clientes as c','c.cli_codigo','ventas_app.cli_codigo')
+        ->select('ventas_app.*','c.cli_nombres as cli_nombres')
+        ->where('ventas_app.vta_codigo', '=', $id )->get();
 
         // de esta forma al recuperar un producto recupero la categoria y las imagenes relacionadas
         //$producto = $this->producto->with(['categoria', 'productos_imagen'])->findOrFail($id);
@@ -208,6 +208,30 @@ class VentaController extends Controller
         return response()->json([
             'data'=> $venta,
             'mensaje'=>'Successfully Retrieved by Id'
+        ],200);
+
+    }
+
+    // funcion que recupera el ultimo + 1 (nro factura)
+    public function MaxNroFactura($establecimiento, $emision, $timbrado)
+    {
+        //$max = DB::select('select max(vta_nro_factura) from users where id = :id', ['id' => 1]);
+        $max = Venta::where([ 
+                        ['loc_codigo_fiscal','=',$establecimiento],
+                        ['punto_emision','=',$emision],
+                        ['vta_nro_timbrado','=',$timbrado],
+                      ])->max('vta_nro_factura');
+
+        // si no viene nada lo ponemos a 1, sino aumentamos en 1
+        if(is_null($max)) {
+            $max = 1;
+        }else{
+            $max = $max  + 1;
+        }                  
+
+        return response()->json([
+            'data'=> $max,
+            'mensaje'=>'Successfully Retrieved by esta + emision + timbrado'
         ],200);
 
     }

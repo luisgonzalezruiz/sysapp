@@ -53,9 +53,9 @@ class FaenaDetallesController extends Controller
         // $faena_detalles = FaenaDetalles::where('fae_codigo', '=', $fae_codigo)
         //                 ->orderBy('fd_item', 'desc')->get();
 
-        $faena_detalles = FaenaDetalles::join('productos as c','c.producto_id','faena_detalles.pro_codigo')
-                ->select('faena_detalles.*','c.descripcion as pro_descripcion_local')
-                ->where('faena_detalles.fae_codigo', '=', $fae_codigo )
+        $faena_detalles = FaenaDetalles::join('productos as c','c.pro_codigo','faena_app_detalles.pro_codigo')
+                ->select('faena_app_detalles.*','c.pro_descripcion_local')
+                ->where('faena_app_detalles.fae_codigo', '=', $fae_codigo )
                 ->orderBy('fd_item', 'desc')->get();
 
         return response()->json([

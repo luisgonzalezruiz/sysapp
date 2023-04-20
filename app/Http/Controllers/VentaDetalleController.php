@@ -50,13 +50,13 @@ class VentaDetalleController extends Controller
      {
 
 
-         //$faena_detalles = FaenaDetalles::join('productos as c','c.producto_id','faena_detalles.pro_codigo')
-         //        ->select('faena_detalles.*','c.descripcion as pro_descripcion_local')
-         //        ->where('faena_detalles.fae_codigo', '=', $fae_codigo )
-         //        ->orderBy('fd_item', 'desc')->get();
+         $venta_detalles = VentaDetalle::join('productos as c','c.pro_codigo','ventas_app_detalles.pro_codigo')
+                 ->select('ventas_app_detalles.*','c.pro_descripcion_local')
+                 ->where('ventas_app_detalles.vta_codigo', '=', $vta_codigo )
+                 ->orderBy('dv_item', 'asc')->get();
 
-         $venta_detalles = VentaDetalle::where('vta_codigo', '=', $vta_codigo)
-                 ->orderBy('dv_item','asc')->get();
+        // $venta_detalles = VentaDetalle::where('vta_codigo', '=', $vta_codigo)
+        //         ->orderBy('dv_item','asc')->get();
 
          return response()->json([
              'data'=>$venta_detalles,

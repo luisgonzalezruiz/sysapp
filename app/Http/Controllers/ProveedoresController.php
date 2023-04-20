@@ -14,12 +14,17 @@ class ProveedoresController extends Controller
         //$proveedores = Proveedor::all();
 
         if ($buscar==''){
-            $proveedores = Proveedor::orderBy('proveedor_id', 'desc')->get();
+            $proveedores = Proveedor::select('prov_codigo','prov_descripcion','prov_ruc',
+                                             'prov_direccion','prov_telefonos','prov_mail')
+                            ->orderBy('prov_codigo', 'desc')->get();
+
         }
         else{
-            $proveedores = Proveedor::whereRaw('LOWER(nombres) like (?)', ["%{$buscar}%"])
             //$proveedores = Proveedor::where('nombres', 'like', '%'. $buscar . '%')
-                            ->orderBy('proveedor_id', 'desc')->get();
+            $proveedores = Proveedor::select('prov_codigo','prov_descripcion','prov_ruc',
+                                             'prov_direccion','prov_telefonos','prov_mail')
+                                     ->whereRaw('LOWER(prov_descripcion) like (?)', ["%{$buscar}%"])
+                                     ->orderBy('prov_codigo', 'desc')->get();
         }
 
         return response()->json([

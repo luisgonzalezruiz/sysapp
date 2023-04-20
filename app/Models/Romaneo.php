@@ -10,7 +10,7 @@ class Romaneo extends Model
     use HasFactory;
 
     protected $primaryKey='rom_codigo';
-    protected $table='romaneo';
+    protected $table='romaneo_app';
 
     public $timestamps = false;
 

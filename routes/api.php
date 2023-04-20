@@ -23,6 +23,10 @@ use App\Http\Controllers\VentaController;
 use App\Http\Controllers\VentaDetalleController;
 
 
+
+use App\Http\Controllers\FacturaElectronicaController;
+
+
 /*
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
@@ -139,6 +143,7 @@ Route::delete('romaneoDetalles/{id}',[RomaneoDetalleController::class,'destroy']
 // Ventas
 Route::get('ventas',[VentaController::class,'index']);
 Route::get('ventas/{id}',[VentaController::class,'show']);
+Route::get('ventas/maxNro/{establecimiento}/{emision}/{timbrado}',[VentaController::class,'MaxNroFactura']);
 
 // Esta ruta nos sirve tanto para insertar o actualizar la faena, viene cabecera detalle aqui
 Route::post('ventas/saveVenta',[VentaController::class,'saveVenta']);
@@ -152,3 +157,8 @@ Route::get('ventaDetalles/vta_codigo/{id}',[VentaDetalleController::class,'showB
 Route::post('ventaDetalles',[VentaDetalleController::class,'store']);
 Route::put('ventaDetalles/{id}',[VentaDetalleController::class,'update']);
 Route::delete('ventaDetalles/{id}',[VentaDetalleController::class,'destroy']);
+
+
+
+
+Route::get('facturaElectronica',[FacturaElectronicaController::class,'index']);

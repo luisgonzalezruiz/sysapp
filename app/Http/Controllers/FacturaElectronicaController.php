@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Cliente;
+use App\Models\FacturaElectronica;
 use Illuminate\Http\Request;
 
-class ClientesController extends Controller
+class FacturaElectronicaController extends Controller
 {
 
     public function index(Request $request)
@@ -13,18 +13,10 @@ class ClientesController extends Controller
         $buscar = $request->buscar;
         //$clientes = Cliente::all();
 
-        if ($buscar==''){
-            //$clientes = Cliente::orderBy('cli_codigo', 'desc')->limit(10)->get();
-            $clientes = Cliente::orderBy('cli_codigo', 'desc')->get();
-        }
-        else{
-            $clientes = Cliente::whereRaw('LOWER(cli_nombres) like (?)', ["%{$buscar}%"])
-            //$clientes = Cliente::where('cli_nombres', 'like', '%'. $buscar . '%')
-                            ->orderBy('cli_codigo', 'desc')->get();
-        }
+        $fe = FacturaElectronica::orderBy('pk_fac', 'desc')->get();
 
         return response()->json([
-            'data'=>$clientes,
+            'data'=>$fe,
             'mensaje'=>'Successfully Retrieved Cliente'
         ],200);
 

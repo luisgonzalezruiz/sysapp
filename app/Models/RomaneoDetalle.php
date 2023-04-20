@@ -9,7 +9,7 @@ class RomaneoDetalle extends Model
 {
     use HasFactory;
     protected $primaryKey  = 'rom_det_item';
-    protected $table = 'romaneo_detalle';
+    protected $table = 'romaneo_app_detalle';
 
     public $timestamps = false;
 
