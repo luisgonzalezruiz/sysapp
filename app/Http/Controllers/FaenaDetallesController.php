@@ -77,9 +77,16 @@ class FaenaDetallesController extends Controller
     }
 
 
-    public function destroy(FaenaDetalles $faenaDetalles)
+    public function destroy($id)
     {
-        //
+        $faena_detalle = FaenaDetalles::all()->find($id);
+        $faena_detalle->delete();
+
+        return response()->json([
+            'data'=> $faena_detalle,
+            'mensaje'=>'Successfully Deleted'
+        ],200);
+        
     }
 
 }

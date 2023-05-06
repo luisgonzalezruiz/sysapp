@@ -79,8 +79,15 @@ class RomaneoDetalleController extends Controller
     }
 
 
-    public function destroy(RomaneoDetalle $romaneoDetalle)
+    public function destroy($id)
     {
-        //
+        $romaneo_detalle = RomaneoDetalle::all()->find($id);
+        $romaneo_detalle->delete();
+
+        return response()->json([
+            'data'=> $romaneo_detalle,
+            'mensaje'=>'Successfully Deleted'
+        ],200);
+        
     }
 }

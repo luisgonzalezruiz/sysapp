@@ -18,6 +18,7 @@ class AuthController extends Controller
             'mensaje'=>'Successfully Retrieved categorias'
         ],200);
 
+
     }
 
     // OJO : las tablas del passport php artisan passport:install

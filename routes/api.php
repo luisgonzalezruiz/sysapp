@@ -10,6 +10,7 @@ use App\Http\Controllers\ProductosController;
 use App\Http\Controllers\ProductosImagenController;
 use App\Http\Controllers\ClientesController;
 use App\Http\Controllers\ProveedoresController;
+use App\Http\Controllers\FuncionariosController;
 
 use App\Http\Controllers\FaenaController;
 use App\Http\Controllers\FaenaDetallesController;
@@ -37,6 +38,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('login', 'Auth\AuthController@login')->name('login');
 Route::post('register', 'Auth\AuthController@register');
 */
+
 
 Route::post('multiple-image-upload', 'API\MultipleUploadController@store');
 Route::post('uploadTest', 'API\MultipleUploadController@uploadTest');
@@ -101,6 +103,15 @@ Route::put('proveedores/{id}',[ProveedoresController::class,'update']);
 Route::delete('proveedores/{id}',[ProveedoresController::class,'destroy']);
 
 
+// ruta de los funcionarios
+Route::get('funcionarios',[FuncionariosController::class,'index']);
+Route::get('funcionarios/{id}',[FuncionariosController::class,'show']);
+Route::post('funcionarios',[FuncionariosController::class,'store']);
+Route::put('funcionarios/{id}',[FuncionariosController::class,'update']);
+Route::delete('funcionarios/{id}',[FuncionariosController::class,'destroy']);
+
+
+
 // Faena
 Route::get('faenas',[FaenaController::class,'index']);
 Route::get('faenas/{id}',[FaenaController::class,'show']);
@@ -111,6 +122,10 @@ Route::put('faenas/{id}',[FaenaController::class,'update']);
 // Esta ruta nos sirve tanto para insertar o actualizar la faena, viene cabecera detalle aqui
 Route::post('faenas/saveFaena',[FaenaController::class,'saveFaena']);
 Route::delete('faenas/{id}',[FaenaController::class,'destroy']);
+
+
+Route::get('faenas/lotes/lista',[FaenaController::class,'faenaLotes']);
+Route::get('faenas/tarjetas/{nroLote}',[FaenaController::class,'faenaTarjetas']);
 
 
 Route::get('faenaDetalles',[FaenaDetallesController::class,'index']);

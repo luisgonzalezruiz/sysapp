@@ -17,6 +17,8 @@ class FaenaController extends Controller
         // aqui recibimos un json con el elemento a buscar
         $buscar = $request->buscar;
 
+        
+
         if ($buscar==''){
             //$faenas = Faena::orderBy('fae_codigo', 'desc')->get();
 
@@ -40,6 +42,53 @@ class FaenaController extends Controller
 
     }
 
+    // este metodo devuel la lista de lotes de faenas que esta disponible
+    public function faenaLotes(Request $request)
+    {
+        // aqui recibimos un json con el elemento a buscar
+        $buscar = $request->buscar;
+
+        if ($buscar==''){
+            $faenas = DB::select('SELECT * 
+                                  FROM vfaena_master 
+                                  order by fae_fecha desc , fae_nro_lote  limit 200');  
+        }else{
+            $buscar = $buscar . "%";
+            $faenas = DB::select('SELECT * 
+                                  FROM vfaena_master 
+                                  WHERE fae_nro_lote like ?
+                                  order by fae_fecha desc limit 200', [$buscar]);        
+        }        
+
+        return response()->json([
+            'data'=>$faenas,
+            'mensaje'=>'Successfully Retrieved Faenas'
+        ],200);
+        
+    }
+
+    public function faenaTarjetas($nroLote)
+    {
+        $tarjetas =[];
+        //$tarjetas = DB::select("SELECT * FROM vdetalles_faena where fae_nro_lote = '$nroLote'");
+        if ($nroLote != ''){
+            //$tarjetas = DB::select('SELECT * 
+            //                        FROM vdetalles_faena 
+            //                        WHERE fae_nro_lote = (?)
+            //                        ORDER BY det_fae_tarjeta', [$nroLote]);        
+
+            $tarjetas = DB::select('SELECT * 
+                                    FROM fn_recuperadetallesfaena(?)',[$nroLote]);                                     
+
+
+        }
+
+        return response()->json([
+            'data'=>$tarjetas,
+            'mensaje'=>'Successfully Retrieved Tarjetas'
+        ],200);
+        
+    }
 
     public function create()
     {
