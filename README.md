@@ -1,5 +1,8 @@
 php artisan serve --host=192.168.70.59:8000
 
+token sysapp
+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
+
 
 para passport
 php artisan passport:install
