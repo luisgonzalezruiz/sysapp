@@ -82,4 +82,5 @@ class VentaDetalleController extends Controller
     {
         //
     }
+    
 }

@@ -16,8 +16,7 @@ class FaenaController extends Controller
     {
         // aqui recibimos un json con el elemento a buscar
         $buscar = $request->buscar;
-
-        
+       
 
         if ($buscar==''){
             //$faenas = Faena::orderBy('fae_codigo', 'desc')->get();
