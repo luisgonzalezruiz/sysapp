@@ -38,4 +38,5 @@ class ListingViewed implements ShouldBroadcast  //ShouldBroadcastNow
     {
         return new Channel('product');
     }
+    
 }

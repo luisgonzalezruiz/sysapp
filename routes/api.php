@@ -26,6 +26,8 @@ use App\Http\Controllers\VentaDetalleController;
 use App\Http\Controllers\EntradaMercaderiaController;
 use App\Http\Controllers\EntradaMercaderiaDetalleController;
 
+use App\Http\Controllers\RomaneoCorteController;
+use App\Http\Controllers\RomaneoCorteDetalleController;
 
 use App\Http\Controllers\FacturaElectronicaController;
 
@@ -54,17 +56,14 @@ Route::group(['prefix' => 'auth'], function () {
     Route::group(['middleware' => 'auth:api'], function() {
         Route::get('logout', 'Auth\AuthController@logout');
         Route::get('user', 'Auth\AuthController@user')->name('user');
-
     });
 
 });
-
 
 Route::group(['middleware' => 'auth:api'], function() {
     //Route::get('productos',[ProductosController::class,'index'])->name('produtos.index');
     //Route::post('productos',[ProductosController::class,'store']);
 });
-
 
 Route::get('users',[AuthController::class,'index']);
 
@@ -161,9 +160,12 @@ Route::delete('romaneoDetalles/{id}',[RomaneoDetalleController::class,'destroy']
 Route::get('ventas',[VentaController::class,'index']);
 Route::get('ventas/{id}',[VentaController::class,'show']);
 Route::get('ventas/maxNro/{establecimiento}/{emision}/{timbrado}',[VentaController::class,'MaxNroFactura']);
+Route::get('ventas/enlaseQR/{id}',[VentaController::class,'EnlaceQR']);
+
 
 // Esta ruta nos sirve tanto para insertar o actualizar la faena, viene cabecera detalle aqui
 Route::post('ventas/saveVenta',[VentaController::class,'saveVenta']);
+Route::put('ventas/{id}',[VentaController::class,'update']);
 Route::delete('ventas/{id}',[VentaController::class,'destroy']);
 
 // detalles del romaneo
@@ -178,7 +180,7 @@ Route::delete('ventaDetalles/{id}',[VentaDetalleController::class,'destroy']);
 Route::get('facturaElectronica',[FacturaElectronicaController::class,'index']);
 
 
-// Ventas
+// entradas
 Route::get('entradas',[EntradaMercaderiaController::class,'index']);
 Route::get('entradas/{id}',[EntradaMercaderiaController::class,'show']);
 //Route::get('ventas/maxNro/{establecimiento}/{emision}/{timbrado}',[VentaController::class,'MaxNroFactura']);
@@ -195,5 +197,24 @@ Route::get('entradaDetalles/em_codigo/{id}',[EntradaMercaderiaDetalleController:
 Route::post('entradaDetalles',[EntradaMercaderiaDetalleController::class,'store']);
 Route::put('entradaDetalles/{id}',[EntradaMercaderiaDetalleController::class,'update']);
 Route::delete('entradaDetalles/{id}',[EntradaMercaderiaDetalleController::class,'destroy']);
+
+
+// romaneo de cortes
+Route::get('cortes',[RomaneoCorteController::class,'index']);
+Route::get('cortes/{id}',[RomaneoCorteController::class,'show']);
+
+// Esta ruta nos sirve tanto para insertar o actualizar la faena, viene cabecera detalle aqui
+Route::post('cortes/saveCorte',[RomaneoCorteController::class,'saveCorte']);
+Route::delete('cortes/{id}',[RomaneoCorteController::class,'destroy']);
+
+// detalles del romaneo
+Route::get('corteDetalles',[RomaneoCorteDetalleController::class,'index']);
+Route::get('corteDetalles/{id}',[RomaneoCorteDetalleController::class,'show']);
+
+Route::get('corteDetalles/rc_codigo/{id}',[RomaneoCorteDetalleController::class,'showByID']);
+Route::post('corteDetalles',[RomaneoCorteDetalleController::class,'store']);
+Route::put('corteDetalles/{id}',[RomaneoCorteDetalleController::class,'update']);
+Route::delete('corteDetalles/{id}',[RomaneoCorteDetalleController::class,'destroy']);
+
 
 

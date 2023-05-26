@@ -25,7 +25,7 @@ class EntradaMercaderia extends Model
 
 
     //definimos una relacion uno a mucho
-    public function EntradaMercaderiaDetalle()
+    public function entrada_detalles()
     {
         return $this->hasMany(EntradaMercaderiaDetalle::class,'em_codigo');
     }

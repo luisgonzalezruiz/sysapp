@@ -22,20 +22,21 @@ class VentaController extends Controller
             //$faenas = Ventas::orderBy('fae_codigo', 'desc')->get();
 
             $ventas = Venta::join('clientes as c','c.cli_codigo','ventas_app.cli_codigo')
-                            ->select('ventas_app.*','c.cli_nombres as cli_nombres')
+                            ->select('ventas_app.*','c.cli_nombres as cli_nombres','c.cli_ruc')
                             ->where([
                                 ['origen','=','APP'],
                                 ['vta_fecha_venta','>=','2023-01-01'],
-                            ])->get();
+                            ])
+                            ->orderBy('vta_codigo','desc')->get();
         }
         else{
             $ventas = Venta::join('clientes as c','c.cli_codigo','ventas_app.cli_codigo')
-                            ->select('ventas_app.*','c.cli_nombres as cli_nombres')
+                            ->select('ventas_app.*','c.cli_nombres as cli_nombres','c.cli_ruc')
                             ->where([
                                 ['origen','=','APP'],
                                 ['vta_fecha_venta','>=','2023-01-01'],
                                 ['c.cli_nombres', 'like','%'. $buscar . '%']
-                            ])->get();
+                            ])->orderBy('vta_codigo','desc')->get();
         }
         return response()->json([
             'data'=>$ventas,
@@ -98,7 +99,10 @@ class VentaController extends Controller
             $venta->vta_nro_factura = $data->vta_nro_factura;
             $venta->cuenta_contable = $data->cuenta_contable;
             $venta->vta_tipo = $data->vta_tipo;
-            $venta->vta_saldo = $data->vta_saldo;
+            
+            // esto debemos ver bien, por que en cada actualizacion va estar igualando total a saldo
+            $venta->vta_saldo = $data->vta_total_factura;
+
             $venta->vta_estado = $data->vta_estado;
             $venta->rom_nro_lote = $data->rom_nro_lote;
             $venta->vta_serie = $data->vta_serie;
@@ -166,6 +170,15 @@ class VentaController extends Controller
                 DB::commit();
                 // si llega aqui es por que fue exitoso el registro
                 $mensaje='Registro grabado con existo';
+                
+                // *******************************************************
+                // recupero la venta con los detalles
+                // *******************************************************
+                //$venta = Venta::orderBy('vta_codigo', 'desc')
+                //                    ->where('vta_codigo','=',$id)
+                //                    ->with('VentaDetalles')->get();
+                // *******************************************************                    
+
             }else{
                 $mensaje='No se pudo grabar el registro';
             }
@@ -205,9 +218,30 @@ class VentaController extends Controller
         // de esta forma al recuperar un producto recupero la categoria y las imagenes relacionadas
         //$producto = $this->producto->with(['categoria', 'productos_imagen'])->findOrFail($id);
 
+        // como la consulta anterior devuelve en formato de lista, necesitamos retornar solo
+        // un objeto json, sin los corchetes, por eso extarigo del index [0] y retorno eso
+        $objVenta = $venta[0];
+
+        // ***************************************************************************** */
+        // Consultamos si el registro ya tiene QR
+        // ***************************************************************************** */
+        $enlase_qr = DB::select('SELECT enlase_qr FROM fn_recuperadetalle_de(?)',[$id]);  
+        
+        if(empty($enlase_qr)) {
+            $link = "";
+        }else{
+            $link = $enlase_qr[0]->enlase_qr;
+        }  
+        $objVenta->enlase_qr = $link;
+        //***************************************************************************** */
+
+        //$venta = Venta::orderBy('vta_codigo', 'desc')
+        //                       ->where('vta_codigo','=',$id)
+        //                      ->with('VentaDetalles')->get();
+
         return response()->json([
-            'data'=> $venta,
-            'mensaje'=>'Successfully Retrieved by Id'
+            'data'=>$objVenta,
+            'mensaje'=>'Successfully Retrieved by Id x'
         ],200);
 
     }
@@ -236,6 +270,26 @@ class VentaController extends Controller
 
     }
 
+    public function EnlaceQR($id)
+    {
+
+        $enlase_qr = DB::select('SELECT * 
+                                  FROM fn_recuperadetalle_de(?)',[$id]);  
+
+        // si no viene nada lo ponemos a 1, sino aumentamos en 1
+        if(empty($enlase_qr)) {
+            $link = "";
+        }else{
+            $link =  $enlase_qr[0];
+        }                  
+
+        return response()->json([
+            'data'=> $link ,
+            'mensaje'=>'Successfully Retrieved by QR'
+        ],200);
+
+    }
+
 
     public function edit(Romaneo $romaneo)
     {
@@ -243,9 +297,20 @@ class VentaController extends Controller
     }
 
 
-    public function update(Request $request, Romaneo $romaneo)
+    // actualiza el estado del comprobante
+    public function update(Request $request, $id)
     {
-        //
+        $venta = Venta::all()->find($id);
+
+        $venta->vta_estado = 2;
+
+        $venta->save();
+    
+        return response()->json([
+            'data'=> $venta,
+            'mensaje'=>'Successfully Updated'
+        ],200);
+
     }
 
 

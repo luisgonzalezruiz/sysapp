@@ -143,19 +143,17 @@ class EntradaMercaderiaController extends Controller
 
     public function show($id)
     {
-        /*
-        $venta = Venta::join('clientes as c','c.cli_codigo','ventas_app.cli_codigo')
-        ->select('ventas_app.*','c.cli_nombres as cli_nombres')
-        ->where('ventas_app.vta_codigo', '=', $id )->get();
+        //$entrada = EntradaMercaderia::join('locales as c','c.loc_codigo','entradas_mercaderias_app.loc_codigo')
+        //->select('entradas_mercaderias_app.*','c.loc_descripcion')
+       // ->where('entradas_mercaderias_app.em_codigo', '=', $id )->get();
 
-        // de esta forma al recuperar un producto recupero la categoria y las imagenes relacionadas
-        //$producto = $this->producto->with(['categoria', 'productos_imagen'])->findOrFail($id);
-
+        // de esta forma al recuperar la entrada recupero los detalles relacionados
+        $entrada = EntradaMercaderia::orderBy('em_codigo', 'desc')
+                                    ->with('entrada_detalles')->get();
         return response()->json([
-            'data'=> $venta,
+            'data'=> $entrada,
             'mensaje'=>'Successfully Retrieved by Id'
-        ],200);
-        */
+        ],200);       
         
 
     }

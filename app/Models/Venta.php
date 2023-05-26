@@ -24,7 +24,7 @@ class Venta extends Model
                          'lp_codigo', 'dep_codigo', 'vta_doc_base', 'vta_tipo_cambio_sys', 'fun_codigo_creador',
                          'fun_codigo_modificador', 'fec_creacion', 'fec_modificacion', 'vta_observacion',
                          'vta_iva5', 'vta_iva10', 'vta_exenta', 'cf_codigo', 'rc_codigo', 'com_codigo_interno',
-                         'tipo_documento', 'origen','user_id'
+                         'tipo_documento', 'origen','user_id','vta_codigo_master','vta_migrado'
                         ];
 
     //definimosunarelacionunoamucho

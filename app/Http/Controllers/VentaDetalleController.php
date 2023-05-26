@@ -78,9 +78,16 @@ class VentaDetalleController extends Controller
     }
 
 
-    public function destroy(VentasDetalles $ventasDetalles)
+    public function destroy($id)
     {
-        //
+        $venta_detalle = VentaDetalle::all()->find($id);
+        $venta_detalle->delete();
+
+        return response()->json([
+            'data'=> $venta_detalle,
+            'mensaje'=>'Successfully Deleted'
+        ],200);
+        
     }
     
 }

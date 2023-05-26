@@ -77,6 +77,11 @@ class AuthController extends Controller
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
 
+        $user->serie = $request->serie;
+        $user->establecimiento = $request->establecimiento;
+        $user->punto_emision = $request->punto_emision;
+        $user->timbrado = $request->timbrado;
+
         $user->save();
         return response()->json([
             'message' => 'Successfully created user!'
@@ -98,6 +103,11 @@ class AuthController extends Controller
      */
     public function user(Request $request)
     {
-        return response()->json($request->user());
+        //return response()->json($request->user());
+        return response()->json([
+            'data'=>$request->user(),
+            'mensaje'=>'Successfully Retrieved user'
+        ],200);
+
     }
 }

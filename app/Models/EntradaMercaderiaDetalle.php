@@ -19,8 +19,13 @@ class EntradaMercaderiaDetalle extends Model
                 'ca_codigo', 'em_costo_mercaderia', 'emd_cantidad_res', 'emd_kilos'
                 ];
     
-    public function EntradaMercaderia(){
+    public function entrada_mercaderia(){
         return $this->belongsTo(EntradaMercaderia::class,'em_codigo');
+    }
+
+    // un detalle de producto corresponde a un producto
+    public function producto(){
+        return $this->belongsTo(Producto::class,'pro_codigo');
     }
 
 }
