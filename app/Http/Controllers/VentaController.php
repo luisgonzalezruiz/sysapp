@@ -13,6 +13,7 @@ use Carbon\Carbon;
 
 use App\Events\ListingViewed;
 
+// este controller hace toda la magia
 class VentaController extends Controller
 {
 
