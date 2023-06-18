@@ -4,11 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Venta;
 use App\Models\VentaDetalle;
+use App\Models\Cliente;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\DB;
 
 use Carbon\Carbon;
+
+use App\Events\ListingViewed;
 
 class VentaController extends Controller
 {
@@ -162,9 +165,7 @@ class VentaController extends Controller
                     $detalle->dv_impuesto_d_desc = $item['dv_impuesto_d_desc'];
                     $detalle->dv_total_d_desc = $item['dv_total_d_desc'];
                     //$detalle->dv_item = $item['dv_item'];
-
                     $detalle->save();
-
                 }
 
                 DB::commit();
@@ -192,8 +193,11 @@ class VentaController extends Controller
             //$this->emit('sale-error', $exp->getMessage());
         }
 
-        // esto normalmente debemos traer de la DB
-        //$romaneo->cli_nombres = $data->cli_nombres;   // solo es una prueba
+        
+        // traemos los datos del cliente
+        $cliente = Cliente::all()->find($venta->cli_codigo);
+        $venta->cli_nombres = $cliente->cli_nombres;   // solo es una prueba
+        $venta->cli_ruc = $cliente->cli_ruc;
 
         return response()->json([
             'data'=>$venta,
@@ -305,6 +309,9 @@ class VentaController extends Controller
         $venta->vta_estado = 2;
 
         $venta->save();
+
+        // emitimos el evento
+        event(new ListingViewed($venta));
     
         return response()->json([
             'data'=> $venta,

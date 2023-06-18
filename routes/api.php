@@ -141,6 +141,7 @@ Route::delete('faenaDetalles/{id}',[FaenaDetallesController::class,'destroy']);
 // Romaneo
 Route::get('romaneos',[RomaneoController::class,'index']);
 Route::get('romaneos/{id}',[RomaneoController::class,'show']);
+Route::put('romaneos/{id}',[RomaneoController::class,'update']);
 
 // Esta ruta nos sirve tanto para insertar o actualizar la faena, viene cabecera detalle aqui
 Route::post('romaneos/saveRomaneo',[RomaneoController::class,'saveRomaneo']);

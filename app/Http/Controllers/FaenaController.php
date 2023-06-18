@@ -21,7 +21,7 @@ class FaenaController extends Controller
         if ($buscar==''){
             //$faenas = Faena::orderBy('fae_codigo', 'desc')->get();
 
-            $faenas = Faena::join('proveedores as c','c.prov_codigo','faena_app.prov_codigo')
+            $faenas = Faena::join('v_proveedores_master as c','c.prov_codigo','faena_app.prov_codigo')
                             ->select('faena_app.*','c.prov_descripcion as prov_descripcion')->get();
 
         }
@@ -30,7 +30,7 @@ class FaenaController extends Controller
             //$faenas = Faena::where('fae_hecho_por', 'like', '%'. $buscar . '%')
             //                ->orderBy('fae_codigo', 'desc')->get();
 
-            $faenas = Faena::join('proveedores as c','c.prov_codigo','faena_app.prov_codigo')
+            $faenas = Faena::join('v_proveedores_master as c','c.prov_codigo','faena_app.prov_codigo')
                             ->select('faena_app.*','c.prov_descripcion as prov_descripcion')
                             ->where('faena_app.fae_codigo', 'like','%'. $buscar . '%')->get();
         }
@@ -120,7 +120,8 @@ class FaenaController extends Controller
                 'fae_destino' => $data->fae_destino,
                 'com_nro_comprobante' => $data->com_nro_comprobante,
                 'com_codigo' => $data->com_codigo,
-                'user_id' => $data->user_id
+                'user_id' => $data->user_id,
+                'origen' => $data->origen
             ]);
 
             //$c=0;
@@ -192,12 +193,14 @@ class FaenaController extends Controller
             $faena->fae_fecha = Carbon::parse($data->fae_fecha);
             $faena->prov_codigo = $data->prov_codigo;
             $faena->loc_codigo = $data->loc_codigo;
+            $faena->fae_estado = $data->fae_estado;
             $faena->fae_entregado_por = $data->fae_entregado_por;
             $faena->fae_hecho_por = $data->fae_hecho_por;
             $faena->fae_destino = $data->fae_destino;
             $faena->com_nro_comprobante = $data->com_nro_comprobante;
             $faena->com_codigo = $data->com_codigo;
             $faena->user_id = $data->user_id;
+            $faena->origen = $data->origen;
             $faena->save();
 
             //$c=0;
@@ -266,8 +269,21 @@ class FaenaController extends Controller
 
 
 
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
+        $faena = Faena::all()->find($id);
+
+        $faena->fae_estado = 2;
+
+        $faena->save();
+
+        // emitimos el evento
+        //event(new ListingViewed($venta));
+    
+        return response()->json([
+            'data'=> $faena,
+            'mensaje'=>'Successfully Updated'
+        ],200);
 
     }
 

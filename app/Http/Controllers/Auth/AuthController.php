@@ -81,6 +81,7 @@ class AuthController extends Controller
         $user->establecimiento = $request->establecimiento;
         $user->punto_emision = $request->punto_emision;
         $user->timbrado = $request->timbrado;
+        $user->fun_codigo = $request->fun_codigo;
 
         $user->save();
         return response()->json([

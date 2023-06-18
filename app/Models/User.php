@@ -22,7 +22,7 @@ class User extends Authenticatable
         'first_name',
         'last_name',
         'email',
-        'password','serie','establecimiento','punto_emision','timbrado'
+        'password','serie','establecimiento','punto_emision','timbrado', 'fun_codigo'
     ];
 
     /**

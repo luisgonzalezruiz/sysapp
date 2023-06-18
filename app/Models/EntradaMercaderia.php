@@ -20,7 +20,7 @@ class EntradaMercaderia extends Model
         'em_estado', 'dep_codigo', 'fun_codigo_creador', 'fun_codigo_modificador', 
         'fec_creacion', 'fec_modificacion', 'em_observacion', 'em_tipo_cambio_sys', 
         'em_novillo', 'em_vaquilla', 'em_vaca', 'em_toro', 'em_total_kilos', 
-        'em_cantidad_reses', 'user_id'
+        'em_cantidad_reses', 'user_id','origen'
         ];
 
 

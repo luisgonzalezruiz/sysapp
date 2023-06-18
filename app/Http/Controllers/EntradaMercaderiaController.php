@@ -87,6 +87,8 @@ class EntradaMercaderiaController extends Controller
             $entrada->em_total_kilos = $data->em_total_kilos; 
             $entrada->em_cantidad_reses = $data->em_cantidad_reses; 
             $entrada->user_id = $data->user_id;
+            $entrada->origen = $data->origen;
+
             $entrada->save();
 
             if ($entrada){

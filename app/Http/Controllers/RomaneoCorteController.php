@@ -60,6 +60,7 @@ class RomaneoCorteController extends Controller
 
             //$romaneo->rc_codigo = $data->rc_codigo;
             $romaneo->loc_codigo = $data->loc_codigo;
+            $romaneo->rc_estado = $data->rc_estado;
             $romaneo->rc_lote = $data->rc_lote;
             $romaneo->rc_fecha = Carbon::parse($data->rom_fecha)->format('m/d/Y');
             $romaneo->rc_cantidad = $data->rc_cantidad;
@@ -71,6 +72,7 @@ class RomaneoCorteController extends Controller
             $romaneo->rc_cantidad_kilos = $data->rc_cantidad_kilos;
             $romaneo->rep_codigo = $data->rep_codigo;
             $romaneo->user_id = $data->user_id;
+            $romaneo->origen = $data->origen;
             $romaneo->save();
 
             if ($romaneo){

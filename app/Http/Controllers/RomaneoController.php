@@ -69,6 +69,7 @@ class RomaneoController extends Controller
             $romaneo->rom_hecho_por = $data->rom_hecho_por;
             $romaneo->rom_nro_boleta = $data->rom_nro_boleta;
             $romaneo->loc_codigo = $data->loc_codigo;
+            $romaneo->rom_estado = $data->rom_estado;
             $romaneo->cli_codigo = $data->cli_codigo;
             $romaneo->rom_nro_remision = $data->rom_nro_remision;
             $romaneo->rom_nota_credito = $data->rom_nota_credito;
@@ -85,6 +86,7 @@ class RomaneoController extends Controller
             $romaneo->cod_entregado_por = $data->cod_entregado_por;
             $romaneo->cod_hecho_por = $data->cod_hecho_por;
             $romaneo->user_id = $data->user_id;
+            $romaneo->origen = $data->origen;
 
             $romaneo->save();
 
@@ -387,9 +389,22 @@ class RomaneoController extends Controller
     }
 
 
-    public function update(Request $request, Romaneo $romaneo)
+    public function update(Request $request, $id)
     {
-        //
+        $romaneo = Romaneo::all()->find($id);
+
+        $romaneo->rom_estado = 2;
+
+        $romaneo->save();
+
+        // emitimos el evento
+        //event(new ListingViewed($venta));
+    
+        return response()->json([
+            'data'=> $romaneo,
+            'mensaje'=>'Successfully Updated'
+        ],200);
+
     }
 
 

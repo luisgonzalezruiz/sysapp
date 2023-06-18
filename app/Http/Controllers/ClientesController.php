@@ -15,12 +15,12 @@ class ClientesController extends Controller
 
         if ($buscar==''){
             //$clientes = Cliente::orderBy('cli_codigo', 'desc')->limit(10)->get();
-            $clientes = Cliente::orderBy('cli_codigo', 'desc')->get();
+            $clientes = Cliente::orderBy('cli_codigo', 'asc')->get();
         }
         else{
             $clientes = Cliente::whereRaw('LOWER(cli_nombres) like (?)', ["%{$buscar}%"])
             //$clientes = Cliente::where('cli_nombres', 'like', '%'. $buscar . '%')
-                            ->orderBy('cli_codigo', 'desc')->get();
+                            ->orderBy('cli_codigo', 'asc')->get();
         }
 
         return response()->json([

@@ -15,7 +15,7 @@ class Faena extends Model
     protected $fillable =
             ['fae_nro_lote', 'fae_fecha', 'prov_codigo',
              'loc_codigo', 'fae_entregado_por', 'fae_hecho_por', 'fae_destino',
-             'com_nro_comprobante', 'com_codigo', 'user_id'
+             'com_nro_comprobante', 'com_codigo', 'user_id','origen'
             ];
 
 

@@ -19,7 +19,7 @@ class Romaneo extends Model
                     'rom_nro_boleta','loc_codigo','cli_codigo','rom_nro_remision','rom_nota_credito',
                     'rom_nota_debito','rom_nd_nov','rom_nd_vac','rom_nd_tor','rom_nc_nov','rom_nc_vac',
                     'rom_nc_tor','rep_codigo','usuario_carga','fecha_carga','usuario_modifica',
-                    'fecha_modifica','cod_entregado_por','cod_hecho_por','user_id'
+                    'fecha_modifica','cod_entregado_por','cod_hecho_por','user_id','origen'
                     ];
 
 

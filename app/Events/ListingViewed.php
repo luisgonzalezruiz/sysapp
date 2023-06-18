@@ -2,7 +2,7 @@
 
 namespace App\Events;
 
-use App\Models\Producto;
+use App\Models\Venta;
 
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
@@ -21,10 +21,10 @@ class ListingViewed implements ShouldBroadcast  //ShouldBroadcastNow
     public $data = [];
 
     
-    public function __construct(Producto $product)
+    public function __construct(Venta $venta)
     {
         $this->data = [
-            'product' => $product,
+            'venta' => $venta,
             'current_user' => 1 //Auth::user()->id
         ];
     }
@@ -36,7 +36,7 @@ class ListingViewed implements ShouldBroadcast  //ShouldBroadcastNow
      */
     public function broadcastOn()
     {
-        return new Channel('product');
+        return new Channel('venta');
     }
     
 }
