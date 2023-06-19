@@ -21,7 +21,9 @@ class VentaController extends Controller
     {
         // aqui recibimos un json con el elemento a buscar
         $buscar = $request->buscar;
+        $user_id = $request->user_id;
 
+        //  ['user_id','=', $user_id],
         if ($buscar==''){
             //$faenas = Ventas::orderBy('fae_codigo', 'desc')->get();
 
@@ -230,14 +232,17 @@ class VentaController extends Controller
         // ***************************************************************************** */
         // Consultamos si el registro ya tiene QR
         // ***************************************************************************** */
-        $enlase_qr = DB::select('SELECT enlase_qr FROM fn_recuperadetalle_de(?)',[$id]);  
+        $enlase_qr = DB::select('SELECT enlase_qr, cdc FROM fn_recuperadetalle_de(?)',[$id]);  
         
         if(empty($enlase_qr)) {
             $link = "";
+            $cdc = "";
         }else{
             $link = $enlase_qr[0]->enlase_qr;
+            $cdc = $enlase_qr[0]->cdc;
         }  
         $objVenta->enlase_qr = $link;
+        $objVenta->cdc = $cdc;
         //***************************************************************************** */
 
         //$venta = Venta::orderBy('vta_codigo', 'desc')
