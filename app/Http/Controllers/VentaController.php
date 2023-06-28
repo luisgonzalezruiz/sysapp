@@ -27,7 +27,7 @@ class VentaController extends Controller
         if ($buscar==''){
             //$faenas = Ventas::orderBy('fae_codigo', 'desc')->get();
 
-            $ventas = Venta::join('clientes as c','c.cli_codigo','ventas_app.cli_codigo')
+            $ventas = Venta::join('v_clientes_master as c','c.cli_codigo','ventas_app.cli_codigo')
                             ->select('ventas_app.*','c.cli_nombres as cli_nombres','c.cli_ruc')
                             ->where([
                                 ['origen','=','APP'],
@@ -36,7 +36,7 @@ class VentaController extends Controller
                             ->orderBy('vta_codigo','desc')->get();
         }
         else{
-            $ventas = Venta::join('clientes as c','c.cli_codigo','ventas_app.cli_codigo')
+            $ventas = Venta::join('v_clientes_master as c','c.cli_codigo','ventas_app.cli_codigo')
                             ->select('ventas_app.*','c.cli_nombres as cli_nombres','c.cli_ruc')
                             ->where([
                                 ['origen','=','APP'],
