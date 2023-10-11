@@ -26,12 +26,12 @@ class VentaController extends Controller
         //  ['user_id','=', $user_id],
         if ($buscar==''){
             //$faenas = Ventas::orderBy('fae_codigo', 'desc')->get();
-
+            // v_clientes_master    
             $ventas = Venta::join('v_clientes_master as c','c.cli_codigo','ventas_app.cli_codigo')
                             ->select('ventas_app.*','c.cli_nombres as cli_nombres','c.cli_ruc')
                             ->where([
                                 ['origen','=','APP'],
-                                ['vta_fecha_venta','>=','2023-01-01'],
+                                ['vta_fecha_venta','>=','2023-08-01'],
                             ])
                             ->orderBy('vta_codigo','desc')->get();
         }
@@ -40,7 +40,7 @@ class VentaController extends Controller
                             ->select('ventas_app.*','c.cli_nombres as cli_nombres','c.cli_ruc')
                             ->where([
                                 ['origen','=','APP'],
-                                ['vta_fecha_venta','>=','2023-01-01'],
+                                ['vta_fecha_venta','>=','2023-08-01'],
                                 ['c.cli_nombres', 'like','%'. $buscar . '%']
                             ])->orderBy('vta_codigo','desc')->get();
         }
@@ -218,7 +218,7 @@ class VentaController extends Controller
 
     public function show($id)
     {
-        $venta = Venta::join('clientes as c','c.cli_codigo','ventas_app.cli_codigo')
+        $venta = Venta::join('v_clientes_master as c','c.cli_codigo','ventas_app.cli_codigo')
         ->select('ventas_app.*','c.cli_nombres as cli_nombres')
         ->where('ventas_app.vta_codigo', '=', $id )->get();
 

@@ -42,8 +42,10 @@ class ProductosController extends Controller
 
         //>with('categoria','productos_imagen') -> estas son las relaciones definidas en el modelo Producto
         if ($buscar==''){
+            
             //$productos = Producto::orderBy('producto_id', 'desc')->with('categoria','productos_imagen')->get();
             //$productos = Producto::orderBy('pro_codigo', 'desc')->get();
+
             $productos = Producto::select('pro_codigo','pro_codigo_local','pro_descripcion_local',
                                           'pro_descripcion_origen','pro_precio_costo','pro_imagen',
                                           'categoria_id','pro_activo','iva_compra','iva_venta')

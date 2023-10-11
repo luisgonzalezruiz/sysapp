@@ -84,10 +84,40 @@ class FaenaController extends Controller
 
         return response()->json([
             'data'=>$tarjetas,
-            'mensaje'=>'Successfully Retrieved Tarjetas'
+            'mensaje'=>'Successfully Retrieved Tarjetas 2'
         ],200);
         
     }
+
+    public function tarjetasDisponibles(Request $request)
+    {
+        // aqui recibimos un json con el elemento a buscar
+        $buscar = $request->buscar;
+
+        $tarjetas =[];
+        //$tarjetas = DB::select("SELECT * FROM vdetalles_faena where fae_nro_lote = '$nroLote'");
+        if ($buscar != ''){
+    
+            $buscar = "%" . $buscar . "%";
+            $tarjetas = DB::select('SELECT *
+                                    FROM  vfaena_tarjetas 
+                                    WHERE ( pro_codigo_local like ? or 
+                                           pro_descripcion_local like ? or fd_tarjeta like ? )
+                                    ORDER BY fae_fecha, fae_nro_lote,fd_tarjeta',[$buscar,$buscar,$buscar]);
+        }else{
+            $tarjetas = DB::select('SELECT *
+                                    FROM  vfaena_tarjetas 
+                                    ORDER BY fae_fecha desc, fae_nro_lote desc,fd_tarjeta desc limit 100 ');
+
+        }
+
+        return response()->json([
+            'data'=>$tarjetas,
+            'mensaje'=>'Successfully Retrieved Tarjetas 1'
+        ],200);
+        
+    }
+
 
     public function create()
     {
@@ -292,4 +322,5 @@ class FaenaController extends Controller
     {
         //
     }
+
 }

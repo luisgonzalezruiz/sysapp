@@ -38,14 +38,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 */
 
-/*
-Route::post('login', 'Auth\AuthController@login')->name('login');
-Route::post('register', 'Auth\AuthController@register');
-*/
+
+//Route::post('login', 'Auth\AuthController@login')->name('login');
+//Route::post('register', 'Auth\AuthController@register');
 
 
-Route::post('multiple-image-upload', 'API\MultipleUploadController@store');
-Route::post('uploadTest', 'API\MultipleUploadController@uploadTest');
+
+//Route::post('multiple-image-upload', 'API\MultipleUploadController@store');
+//Route::post('uploadTest', 'API\MultipleUploadController@uploadTest');
 
 
 Route::group(['prefix' => 'auth'], function () {
@@ -127,6 +127,7 @@ Route::delete('faenas/{id}',[FaenaController::class,'destroy']);
 
 Route::get('faenas/lotes/lista',[FaenaController::class,'faenaLotes']);
 Route::get('faenas/tarjetas/{nroLote}',[FaenaController::class,'faenaTarjetas']);
+Route::get('tarjetas-disponibles',[FaenaController::class,'tarjetasDisponibles']);
 
 
 Route::get('faenaDetalles',[FaenaDetallesController::class,'index']);

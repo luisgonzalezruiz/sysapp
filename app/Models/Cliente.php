@@ -10,5 +10,6 @@ class Cliente extends Model
     use HasFactory;
     protected $primaryKey  = 'cli_codigo';
     protected $table = 'v_clientes_master';
+    //protected $table = 'clientes';
 
 }

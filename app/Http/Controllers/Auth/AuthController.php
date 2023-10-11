@@ -64,12 +64,14 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
+        /*
         $request->validate([
             'fName' => 'required|string',
             'lName' => 'required|string',
             'email' => 'required|string|email|unique:users',
             'password' => 'required|string'
         ]);
+        */
         $user = new User;
 
         $user->first_name = $request->fName;
@@ -85,6 +87,7 @@ class AuthController extends Controller
 
         $user->save();
         return response()->json([
+            'data' => $user,
             'message' => 'Successfully created user!'
         ], 201);
     }
