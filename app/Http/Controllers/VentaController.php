@@ -31,7 +31,7 @@ class VentaController extends Controller
                             ->select('ventas_app.*','c.cli_nombres as cli_nombres','c.cli_ruc')
                             ->where([
                                 ['origen','=','APP'],
-                                ['vta_fecha_venta','>=','2023-08-01'],
+                                ['vta_fecha_venta','>=','2023-10-01'],
                             ])
                             ->orderBy('vta_codigo','desc')->get();
         }
@@ -40,7 +40,7 @@ class VentaController extends Controller
                             ->select('ventas_app.*','c.cli_nombres as cli_nombres','c.cli_ruc')
                             ->where([
                                 ['origen','=','APP'],
-                                ['vta_fecha_venta','>=','2023-08-01'],
+                                ['vta_fecha_venta','>=','2023-10-01'],
                                 ['c.cli_nombres', 'like','%'. $buscar . '%']
                             ])->orderBy('vta_codigo','desc')->get();
         }
@@ -130,6 +130,26 @@ class VentaController extends Controller
             $venta->tipo_documento =  $data->tipo_documento;
             $venta->origen = $data->origen;
             $venta->user_id = $data->user_id;
+
+            // *********************************************************
+            // Ubicacion -- 11-10-23
+            // *********************************************************
+            $venta->vta_coor_x = 0;
+            $venta->vta_coor_y = 0;
+            if (isset($data->vta_coor_x)) {
+                $venta->vta_coor_x = $data->vta_coor_x;
+            }
+            if (isset($data->vta_coor_y)) {
+                $venta->vta_coor_y = $data->vta_coor_y;
+            }
+            // *********************************************************
+
+            //Guardamos informacion del movil
+            $venta->vta_info_extra = "S/D";
+            if (isset($data->vta_info_extra)) {
+                $venta->vta_info_extra = $data->vta_info_extra;
+            }
+
 
             $venta->save();
 
